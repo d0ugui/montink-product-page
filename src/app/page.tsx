@@ -1,7 +1,21 @@
-export default function Home() {
+import { ProductItem } from "@/components/ProductItem";
+import { ProductsRequest } from "@/entities/ProductsRequest";
+
+export default async function Home() {
+  const data = await fetch('https://dummyjson.com/products/?limit=12&skip=0')
+  const { products }: ProductsRequest = await data.json();
+
   return (
-    <div>
-      <h1>Helou</h1>
-    </div>
+    <main className="flex flex-col gap-8 md:m-auto md:w-full md:max-w-6xl py-12 bg-gray-100 px-4 xl:px-0">
+      <div>
+        <h2 className="text-2xl font-bold">Product List</h2>
+        <p className="text-gray-500">Buy your favorites items in real time.</p>
+      </div>
+      <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4 flex-1">
+        {products?.map((productItem) => (
+          <ProductItem product={productItem} key={productItem.id} />
+        ))}
+      </div>
+    </main>
   );
 }
