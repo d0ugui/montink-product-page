@@ -1,4 +1,5 @@
-import * as React from "react"
+"use client";
+
 import { cn } from "@/utils/twMerge";
 
 interface BadgeProps {

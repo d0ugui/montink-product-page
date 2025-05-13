@@ -1,12 +1,11 @@
+import { getProducts } from "@/actions/products";
 import { ProductItem } from "@/components/ProductItem";
-import { ProductsRequest } from "@/entities/ProductsRequest";
 
 export default async function Home() {
-  const data = await fetch('https://dummyjson.com/products/?limit=12&skip=0')
-  const { products }: ProductsRequest = await data.json();
+  const { products} = await getProducts();
 
   return (
-    <main className="flex flex-col gap-8 md:m-auto md:w-full md:max-w-6xl py-12 bg-gray-100 px-4 xl:px-0">
+    <main className="flex flex-col gap-8 md:m-auto md:w-full md:max-w-6xl py-12 px-4 xl:px-0">
       <div>
         <h2 className="text-2xl font-bold">Product List</h2>
         <p className="text-gray-500">Buy your favorites items in real time.</p>

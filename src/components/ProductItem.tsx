@@ -5,9 +5,9 @@ import { Badge } from "./Badge";
 
 export const ProductItem = ({ product }: { product: Product}) => {
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link href={`/product/${product.id}`} >
       <div className="flex flex-col gap-4 rounded-md">
-        <div className="relative flex h-[170px] w-full items-center justify-center rounded-lg bg-accent md:h-[260px] md:min-w-[180px] bg-white">
+        <div className="relative flex h-[170px] w-full items-center justify-center rounded-lg md:h-[260px] md:min-w-[180px]">
           <Image
             src={product.images[0]}
             height={0}
@@ -28,22 +28,9 @@ export const ProductItem = ({ product }: { product: Product}) => {
             {product.title}
           </p>
 
-          <div className="flex items-center gap-2">
-            {product.discountPercentage > 0 ? (
-              <>
-                <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">
-                  R$ 20.00
-                </p>
-                <p className="overflow-hidden text-ellipsis whitespace-nowrap text-xs line-through opacity-75">
-                  R$ 20.00
-                </p>
-              </>
-            ) : (
-              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">
-                R$ 20.00
-              </p>
-            )}
-          </div>
+          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold">
+            R$ 20.00
+          </p>
         </div>
       </div>
     </Link>
