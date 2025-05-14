@@ -6,8 +6,8 @@ import { Badge } from "./Badge";
 export const ProductItem = ({ product }: { product: Product}) => {
   return (
     <Link href={`/product/${product.id}`} >
-      <div className="flex flex-col gap-4 rounded-md">
-        <div className="relative flex h-[170px] w-full items-center justify-center rounded-lg md:h-[260px] md:min-w-[180px]">
+      <div className="flex flex-col gap-4 rounded-md border border-gray-200 p-2">
+        <div className="relative flex h-[170px] w-full items-center justify-center rounded-lg md:h-[260px] md:min-w-[180px] bg-gray-100">
           <Image
             src={product.images[0]}
             height={0}
@@ -20,7 +20,7 @@ export const ProductItem = ({ product }: { product: Product}) => {
             alt={product.title}
           />
 
-          <Badge title={product.category} className="absolute top-2 left-4" variant={product.category}/>
+          <Badge title={product.category} className="absolute top-2 left-2" variant={product.category}/>
         </div>
 
         <div className="flex flex-col gap-1">

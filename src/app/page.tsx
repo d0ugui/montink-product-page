@@ -1,6 +1,6 @@
-import { getProducts } from "@/actions/products";
-import { ProductItem } from "@/components/ProductItem";
-import { ProductsPagination } from "@/components/ProductsPagination";
+import { ProductsList } from "@/components/ProductsList";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 interface SearchParamsProps {
   page?: string;
@@ -12,11 +12,6 @@ export default async function Home(props: { searchParams?: Promise<SearchParamsP
   const currentPage = Number(searchParams?.page) || 1;
   const limit = Number(searchParams?.limit) || 12;
 
-  const { products, total } = await getProducts({
-    page: currentPage,
-    limit
-  });
-
   return (
     <main className="flex flex-col  md:m-auto md:w-full md:max-w-6xl py-12 px-4 xl:px-0">
       <div>
@@ -24,13 +19,9 @@ export default async function Home(props: { searchParams?: Promise<SearchParamsP
         <p className="text-gray-500">Buy your favorites items in real time.</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4 flex-1">
-        {products?.map((productItem) => (
-          <ProductItem product={productItem} key={productItem.id} />
-        ))}
-      </div>
-
-      <ProductsPagination totalItems={total} />
+      <Suspense fallback={<Loading />}>
+        <ProductsList currentPage={currentPage} limit={limit} />
+      </Suspense>
     </main>
   );
 }

@@ -27,7 +27,7 @@ function badgeVariants(variant: string) {
 
 export function Badge({ title, className, variant }: BadgeProps) {
   return (
-    <div className={cn("rounded-full px-2 text-md flex items-center justify-center font-medium", badgeVariants(variant), className)}>
+    <div className={cn("rounded-2xl px-2 py-1 text-sm flex items-center justify-center font-medium", badgeVariants(variant), className)}>
       <p>{title}</p>
     </div>
   )
