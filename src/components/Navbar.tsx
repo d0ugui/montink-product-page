@@ -7,7 +7,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <h1 className="text-2xl font-bold">
-              <strong className="text-purple-700">M</strong>ontik.
+              <strong className="text-purple-700">M</strong>ontink.
             </h1>
 
             <ul className="hidden lg:flex items-center ml-20 gap-4 text-gray-700 font-medium">

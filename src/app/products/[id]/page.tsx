@@ -1,9 +1,9 @@
-import Image from "next/image"
 import { ProductImages } from "../components/ProductImages"
 import { getProductById } from "@/actions/productById"
 import { Suspense } from "react";
 import Loading from "@/app/loading";
 import { ProductInfo } from "../components/ProductInfo";
+import { cookies } from "next/headers";
 
 // Eu poderia utilizar os dados da listagem da página inicial
 // Mas eu achei ideal implementar a rota dinâmica com a chamada

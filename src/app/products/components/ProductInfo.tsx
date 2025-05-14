@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Product } from "@/entities/Product";
 import { ProductOptions } from "./ProductOptions";
+import { cookies } from "next/headers";
 
-export function ProductInfo({ product }: { product: Product }) {
+export async function ProductInfo({ product }: { product: Product }) {
+  const cookiesStore = (await cookies()).get("products-info");
+  const productsInfo = cookiesStore && JSON.parse(cookiesStore?.value);
+
   return (
     <div className="flex flex-col gap-2">
       <h2 className="text-lg xl:text-4xl font-medium">{product.title}</h2>
@@ -25,11 +29,11 @@ export function ProductInfo({ product }: { product: Product }) {
         </p>
       </div>
 
-     <ProductOptions />
+      <ProductOptions productId={product.id} cookies={productsInfo} />
 
       <div className="mt-auto">
         <Button
-          className="bg-violet-700 mt-8 w-full font-bold uppercase xl:text-lg py-6 hover:bg-violet-400 transition-colors"
+          className="bg-violet-700 mt-8 w-full font-bold xl:text-lg py-6 hover:bg-violet-400 transition-colors"
           // onClick={handleAddToCartClick}
         >
           Adicionar ao carrinho

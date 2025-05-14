@@ -1,5 +1,6 @@
 "use client";
 
+import { ProductCookies, setProductCookies } from "@/actions/setCookie";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
@@ -8,14 +9,40 @@ import { useState } from "react";
 const colors = ["red", "blue", "green"];
 const sizes = ["xs", "s", "m", "l", "xl"];
 
-export function ProductOptions() {
+export function ProductOptions({
+  productId,
+  cookies,
+}: {
+  productId: number;
+  cookies: ProductCookies;
+}) {
   const [quantity, setQuantity] = useState(1);
-    const [selectedColor, setSelectedColor] = useState<
-      (typeof colors)[number] | null
-    >(null);
-    const [selectedSize, setSelectedSize] = useState<
-      (typeof sizes)[number] | null
-    >(null);
+  const [selectedColor, setSelectedColor] = useState<
+    (typeof colors)[number] | null
+  >(cookies.color ?? null);
+  const [selectedSize, setSelectedSize] = useState<
+    (typeof sizes)[number] | null
+  >(cookies.size ?? null);
+
+  async function handleChangeSize(size: string) {
+    setSelectedSize(size);
+
+    await setProductCookies({
+      productId,
+      size,
+      ...(selectedColor && { color: selectedColor }),
+    });
+  }
+
+  async function handleChangeColor(color: string) {
+    setSelectedColor(color);
+
+    await setProductCookies({
+      productId,
+      color,
+      ...(selectedSize && { size: selectedSize }),
+    });
+  }
 
   return (
     <>
@@ -26,13 +53,13 @@ export function ProductOptions() {
           {colors.map((color, index) => (
             <Button
               key={index}
-              onClick={() => setSelectedColor(color)}
+              onClick={() => handleChangeColor(color)}
               className={cn(
                 `h-8 w-8 rounded-full`,
-                color === 'red' && `bg-red-500/60 hover:bg-red-600`,
-                color === 'blue' && `bg-blue-500/60 hover:bg-blue-600`,
-                color === 'green' && `bg-green-500/60 hover:bg-green-600`,
-                selectedColor === color && "border border-black/60"
+                color === "red" && `bg-red-500/60 hover:bg-red-600`,
+                color === "blue" && `bg-blue-500/60 hover:bg-blue-600`,
+                color === "green" && `bg-green-500/60 hover:bg-green-600`,
+                selectedColor === color && "border-2 border-black/60"
               )}
               variant="outline"
               size="icon"
@@ -50,10 +77,10 @@ export function ProductOptions() {
               key={size}
               className={cn(
                 "rounded-full uppercase",
-                selectedSize === size && " bg-gray-100"
+                selectedSize === size && "bg-gray-100 border-2 border-black/60"
               )}
               variant="outline"
-              onClick={() => setSelectedSize(size)}
+              onClick={() => handleChangeSize(size)}
               size="icon"
             >
               {size}
