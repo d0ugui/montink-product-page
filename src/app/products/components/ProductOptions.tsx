@@ -19,10 +19,10 @@ export function ProductOptions({
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState<
     (typeof colors)[number] | null
-  >(cookies.color ?? null);
+  >(cookies?.color ?? null);
   const [selectedSize, setSelectedSize] = useState<
     (typeof sizes)[number] | null
-  >(cookies.size ?? null);
+  >(cookies?.size ?? null);
 
   async function handleChangeSize(size: string) {
     setSelectedSize(size);
