@@ -1,20 +1,36 @@
 import { getProducts } from "@/actions/products";
 import { ProductItem } from "@/components/ProductItem";
+import { ProductsPagination } from "@/components/ProductsPagination";
 
-export default async function Home() {
-  const { products} = await getProducts();
+interface SearchParamsProps {
+  page?: string;
+  limit?: string;
+}
+
+export default async function Home(props: { searchParams?: Promise<SearchParamsProps>}) {
+  const searchParams = await props.searchParams;
+  const currentPage = Number(searchParams?.page) || 1;
+  const limit = Number(searchParams?.limit) || 12;
+
+  const { products, total } = await getProducts({
+    page: currentPage,
+    limit
+  });
 
   return (
-    <main className="flex flex-col gap-8 md:m-auto md:w-full md:max-w-6xl py-12 px-4 xl:px-0">
+    <main className="flex flex-col  md:m-auto md:w-full md:max-w-6xl py-12 px-4 xl:px-0">
       <div>
         <h2 className="text-2xl font-bold">Product List</h2>
         <p className="text-gray-500">Buy your favorites items in real time.</p>
       </div>
+
       <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4 flex-1">
         {products?.map((productItem) => (
           <ProductItem product={productItem} key={productItem.id} />
         ))}
       </div>
+
+      <ProductsPagination totalItems={total} />
     </main>
   );
 }

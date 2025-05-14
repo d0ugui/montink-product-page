@@ -2,7 +2,7 @@ import { ShoppingCart } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-gray-100">
       <section className="py-4 px-4 xl:px-0 max-w-6xl mx-auto w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
