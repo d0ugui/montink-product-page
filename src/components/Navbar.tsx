@@ -1,4 +1,5 @@
 import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -6,9 +7,9 @@ export default function Navbar() {
       <section className="py-4 px-4 xl:px-0 max-w-6xl mx-auto w-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">
+            <Link href="/" className="text-2xl font-bold">
               <strong className="text-purple-700">M</strong>ontink.
-            </h1>
+            </Link>
 
             <ul className="hidden lg:flex items-center ml-20 gap-4 text-gray-700 font-medium">
               <li>Electronics</li>
