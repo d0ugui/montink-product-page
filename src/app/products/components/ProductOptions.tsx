@@ -2,9 +2,12 @@
 
 import { ProductCookies, setProductCookies } from "@/actions/setCookie";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Address } from "@/entities/Address";
 import { cn } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const colors = ["red", "blue", "green"];
 const sizes = ["xs", "s", "m", "l", "xl"];
@@ -16,6 +19,9 @@ export function ProductOptions({
   productId: number;
   cookies: ProductCookies;
 }) {
+  const [cep, setCep] = useState("");
+  const [error, setError] = useState(false);
+  const [address, setAddress] = useState<Address | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState<
     (typeof colors)[number] | null
@@ -43,6 +49,28 @@ export function ProductOptions({
       ...(selectedSize && { size: selectedSize }),
     });
   }
+
+  async function handleFetchCep() {
+    const address = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const res = await address.json();
+
+    if (res.erro) {
+      setError(true);
+      return;
+    }
+
+    setAddress(res);
+  }
+
+  useEffect(() => {
+    if (cep.length >= 8) {
+      handleFetchCep();
+      return;
+    }
+
+    setError(false);
+    setAddress(null);
+  }, [cep]);
 
   return (
     <>
@@ -115,6 +143,27 @@ export function ProductOptions({
             <ArrowRightIcon size={16} />
           </Button>
         </div>
+      </div>
+
+      <div className="mt-4 flex flex-col gap-2">
+        <Label htmlFor="email">CEP:</Label>
+        <Input
+          type="email"
+          id="email"
+          maxLength={8}
+          placeholder="00000000"
+          value={cep}
+          onChange={(e) => setCep(e.target.value)}
+          className={cn("", error && "border-red-600")}
+        />
+
+        {address && (
+          <p className="text-sm text-gray-700">
+            {`${address?.logradouro}, ${address?.localidade} - ${address?.uf}`}
+          </p>
+        )}
+
+        {error && <p className="text-red-600 text-sm">CEP Inválido!</p>}
       </div>
     </>
   );
