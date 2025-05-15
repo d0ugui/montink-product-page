@@ -10,7 +10,7 @@ export async function ProductInfo({ product }: { product: Product }) {
   const userCookies = productsInfo?.productId === product.id ? productsInfo : null;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 mt-6">
       <h2 className="text-lg xl:text-4xl font-medium">{product.title}</h2>
 
       <div className="flex items-center gap-4 mt-2">
