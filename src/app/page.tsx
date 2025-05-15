@@ -1,10 +1,16 @@
 import { ProductsList } from "@/components/ProductsList";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { Metadata } from "next";
 
 interface SearchParamsProps {
   page?: string;
   limit?: string;
+}
+
+export const metadata: Metadata = {
+  title: 'Montink Product Page',
+  description: 'A page with a lot of products...',
 }
 
 export default async function Home(props: { searchParams?: Promise<SearchParamsProps>}) {

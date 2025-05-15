@@ -1,12 +1,31 @@
 import { ProductImages } from "../components/ProductImages"
-import { getProductById } from "@/actions/productById"
+import getProductById from "@/actions/productById"
 import { Suspense } from "react";
 import Loading from "@/app/loading";
 import { ProductInfo } from "../components/ProductInfo";
-import { cookies } from "next/headers";
 
 // Eu poderia utilizar os dados da listagem da página inicial
 // Mas eu achei ideal implementar a rota dinâmica com a chamada
+
+import type { Metadata } from 'next'
+
+type Props = {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata(
+  { params }: Props
+): Promise<Metadata> {
+  const { id } = await params;
+  const product = await getProductById(Number(id));
+
+  return {
+    title: product.title,
+    description: product.description,
+  }
+}
+
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }>}) {
   const { id } = await params;
