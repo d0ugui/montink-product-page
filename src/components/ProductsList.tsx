@@ -8,7 +8,7 @@ interface ProductsListProps {
 }
 
 export async function ProductsList({ currentPage, limit }: ProductsListProps) {
-  const { products, total: totalItems } = await getProducts({
+  const { products } = await getProducts({
     page: currentPage,
     limit
   });
