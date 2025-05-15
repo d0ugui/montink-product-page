@@ -21,7 +21,7 @@ export async function ProductsList({ currentPage, limit }: ProductsListProps) {
         ))}
       </div>
 
-      <ProductsPagination totalPages={totalItems / limit} />
+      <ProductsPagination />
     </>
   )
 }
