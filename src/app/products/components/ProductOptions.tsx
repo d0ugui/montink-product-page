@@ -17,7 +17,7 @@ export function ProductOptions({
   cookies,
 }: {
   productId: number;
-  cookies: ProductCookies;
+  cookies: ProductCookies | null;
 }) {
   const [cep, setCep] = useState("");
   const [error, setError] = useState(false);

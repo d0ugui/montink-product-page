@@ -7,6 +7,8 @@ export async function ProductInfo({ product }: { product: Product }) {
   const cookiesStore = (await cookies()).get("products-info");
   const productsInfo = cookiesStore && JSON.parse(cookiesStore?.value);
 
+  const userCookies = productsInfo?.productId === product.id ? productsInfo : null;
+
   return (
     <div className="flex flex-col gap-2">
       <h2 className="text-lg xl:text-4xl font-medium">{product.title}</h2>
@@ -29,7 +31,7 @@ export async function ProductInfo({ product }: { product: Product }) {
         </p>
       </div>
 
-      <ProductOptions productId={product.id} cookies={productsInfo} />
+      <ProductOptions productId={product.id} cookies={userCookies} />
 
       <div className="mt-auto">
         <Button
